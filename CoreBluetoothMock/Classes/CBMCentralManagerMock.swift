@@ -903,7 +903,8 @@ open class CBMPeripheralMock: CBMPeer, CBMPeripheral {
               let allServices = mock.services else {
             return
         }
-        guard let services = services, services.contains(service),
+        guard let services = services,
+              services.contains(where: { $0.identifier == service.identifier }),
               let originalService = allServices.first(where: {
                   $0.identifier == service.identifier
               }) else {
@@ -915,7 +916,7 @@ open class CBMPeripheralMock: CBMPeer, CBMPeripheral {
         
         switch delegate.peripheral(mock,
                                    didReceiveIncludedServiceDiscoveryRequest: includedServiceUUIDs,
-                                   for: service as! CBMServiceMock) {
+                                   for: service) {
         case .success:
             service._includedServices = service._includedServices ?? []
             let initialSize = service._includedServices!.count
