@@ -355,7 +355,7 @@ open class CBMCentralManagerMock: NSObject, CBMCentralManager {
     /// - Parameter error: The disconnection reason. Use `CBError` or
     ///                    `CBATTError` errors.
     internal static func peripheral(_ peripheral: CBMPeripheralSpec,
-                                    didDisconnectWithError error: Error =  CBError(.peripheralDisconnected)) {
+                                    didDisconnectWithError error: Error? = CBError(.peripheralDisconnected)) {
         // Is the device connected at all?
         guard peripheral.isConnected else {
             return
@@ -754,7 +754,7 @@ open class CBMPeripheralMock: CBMPeer, CBMPeripheral {
         }
     }
     
-    fileprivate func disconnected(withError error: Error,
+    fileprivate func disconnected(withError error: Error?,
                                   completion: @escaping (Error?) -> ()) {
         // Ensure the device is connected.
         guard var interval = mock.connectionInterval,
